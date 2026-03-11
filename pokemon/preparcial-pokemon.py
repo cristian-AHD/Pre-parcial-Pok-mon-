@@ -1,5 +1,6 @@
 from fastapi import FastAPI
 from pydantic import BaseModel
+import json
 
 app = FastAPI()
 
@@ -81,7 +82,7 @@ def show_one_pokemon(nombre: str):
 
     return {"error": "Pokemon no encontrado"}
 
-@app.get("/showonepokemonbyid/{pokemon_id}")
+@app.get("/showonepokemonbyid/{pokemon id}")
 def show_pokemon_by_id(pokemon_id: int):
     for p in pokemons:
         if p.id == pokemon_id:
@@ -150,3 +151,17 @@ def pokemon_battle(id1: int, id2: int):
         "batalla": historial,
         "ganador": ganador
     }
+
+def validar_generacion(pokemon: pokemon):
+    if pokemon.id < 1 or pokemon.id > 151:
+        return False
+    return True
+
+@app.post("/addpokemon")
+def add_pokemon(pokemon: pokemon):
+
+    if not validar_generacion(pokemon):
+        return {"error": "Solo se permiten pokemones de la primera generacion"}
+
+    pokemons.append(pokemon)
+    return {"mensaje": "Pokemon agregado"}
