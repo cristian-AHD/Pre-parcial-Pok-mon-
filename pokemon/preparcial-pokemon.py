@@ -81,6 +81,13 @@ def show_one_pokemon(nombre: str):
 
     return {"error": "Pokemon no encontrado"}
 
+@app.get("/showonepokemonbyid/{pokemon_id}")
+def show_pokemon_by_id(pokemon_id: int):
+    for p in pokemons:
+        if p.id == pokemon_id:
+            return p
+    return {"error": "Pokemon no encontrado"}
+
 @app.get("/pokemonordered")
 def pokemon_ordered(by: str = "attack", order: str = "asc"):
 
