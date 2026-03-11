@@ -67,3 +67,12 @@ pokemons = [
     pokemon(id=448, nombre="Lucario", life=70, attack=110, type="lucha/acero"),
 
 ]
+
+@app.get("/showonepokemon")
+def show_one_pokemon(nombre: str):
+    resultado = [p for p in pokemons if p.nombre.lower() == nombre.lower()]
+    
+    if resultado:
+        return resultado[0]
+
+    return {"error": "Pokemon no encontrado"}
