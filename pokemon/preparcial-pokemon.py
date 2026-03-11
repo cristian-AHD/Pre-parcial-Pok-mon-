@@ -68,6 +68,10 @@ pokemons = [
 
 ]
 
+@app.get("/showallpokemons")
+def show_all_pokemons():
+    return pokemons
+
 @app.get("/showonepokemon")
 def show_one_pokemon(nombre: str):
     resultado = [p for p in pokemons if p.nombre.lower() == nombre.lower()]
