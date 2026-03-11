@@ -80,3 +80,19 @@ def show_one_pokemon(nombre: str):
         return resultado[0]
 
     return {"error": "Pokemon no encontrado"}
+
+@app.get("/pokemonordered")
+def pokemon_ordered(by: str = "attack", order: str = "asc"):
+
+    if by not in ["attack", "life", "nombre"]:
+        return {"error": "Parametro invalido"}
+
+    reverse = True if order == "desc" else False
+
+    pokemons_ordenados = sorted(
+        pokemons,
+        key=lambda p: getattr(p, by),
+        reverse=reverse
+    )
+
+    return pokemons_ordenados
